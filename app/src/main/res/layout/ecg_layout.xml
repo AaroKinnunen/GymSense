@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/battery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text=""
+            android:textColor="#FFFFFF"
+            android:textAlignment="gravity" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="376dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/beatimage"
+                android:layout_width="219dp"
+                android:layout_height="348dp"
+                android:layout_gravity="center"
+                android:src="@drawable/circlebtn" />
+
+            <TextView
+                android:id="@+id/hr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:text=""
+                android:textSize="30sp"
+                android:textColor="#FFFFFF" />
+        </FrameLayout>
+
+
+
+
+    </LinearLayout>
+
+<com.jjoe64.graphview.GraphView
+        android:id="@+id/ecg_graphview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
