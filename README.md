@@ -1,11 +1,11 @@
-Android-sovellus sensori datan lukemiseen Movesense-sensorilta. Sovellus on kehitetty Android Studio IDE-kehitysympäristössä. 
+Android-Application GymSense reads sensors From MoveSense and displays measurements and also sends the data to thingsboard for further analysis.
 
-Sovellus edellyttää puhelimelta seuraavaa:
+Application Requirements from phone:
 
 <ul>
-<li>Bluetooth LE-tuki</li>
-<li>Vähintään Android 6.0</li>
-<li>Internet-yhteys</li>
+<li>Bluetooth LE-support</li>
+<li>Atleast Android 6.0</li>
+<li>Internet-connection</li>
 </ul>
 
-Esikäännetty sovellus on saatavilla repositorion Release-osiossa. https://github.com/SavoniaUAS/MovesenseReader/releases/
+Uses some features originally from Savonias MoveSenseReader: https://github.com/SavoniaUAS/MovesenseReader/releases/
