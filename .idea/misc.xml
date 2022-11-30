@@ -4,8 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/ReaderMoveS/GymSense-main/app/src/main/res/drawable/back_gradient.xml" value="0.1995" />
+        <entry key="..\:/ReaderMoveS/GymSense-main/app/src/main/res/drawable/btndesign.xml" value="0.1995" />
+        <entry key="..\:/ReaderMoveS/GymSense-main/app/src/main/res/drawable/btndesign2.xml" value="0.1995" />
         <entry key="..\:/ReaderMoveS/GymSense-main/app/src/main/res/drawable/circle_endbtn.xml" value="0.1995" />
         <entry key="..\:/ReaderMoveS/GymSense-main/app/src/main/res/drawable/circlebtn.xml" value="0.1995" />
+        <entry key="..\:/ReaderMoveS/GymSense-main/app/src/main/res/layout/activity_info.xml" value="0.25" />
         <entry key="..\:/ReaderMoveS/GymSense-main/app/src/main/res/layout/ecg_layout.xml" value="0.25" />
         <entry key="..\:/ReaderMoveS/GymSense-main/app/src/main/res/layout/fragment_parameters.xml" value="0.25" />
         <entry key="..\:/ReaderMoveS/GymSense-main/app/src/main/res/layout/live_datas.xml" value="0.25" />

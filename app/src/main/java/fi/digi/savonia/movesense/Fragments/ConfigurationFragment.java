@@ -105,6 +105,7 @@ public class ConfigurationFragment extends Fragment implements TextWatcher {
         measurementNote.setVisibility(View.GONE);
         LoadSavedValues();
 
+
     }
 
     private void CheckRequirements()

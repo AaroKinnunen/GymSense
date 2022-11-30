@@ -149,19 +149,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
         }
 
         CreateLoadingDialog(getString(R.string.loading_title),getString(R.string.unsubscribe_message));
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        measurementHelper.Stop();
-                        progressDialog.dismiss();
-                        setFragment(new ParametersFragment(),Page.parameter);
-                    }
-                });
-            }
-        },5000);
+        new Handler().postDelayed(() -> runOnUiThread(() -> {
+            measurementHelper.Stop();
+            progressDialog.dismiss();
+            setFragment(new ParametersFragment(),Page.parameter);
+        }),5000);
     }
 
     @Override
@@ -231,10 +223,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
 
     }
 
-    private void Test()
-    {
-
-    }
     public static void startAnimation(final int view, final Activity activity) {
         //
         // final int start = Color.parseColor("#FA07B5");
@@ -258,16 +246,13 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
         animator.setDuration(9000);
         animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.setRepeatMode(ValueAnimator.REVERSE);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                Float fraction = valueAnimator.getAnimatedFraction();
-                int newStrat = (int) evaluator.evaluate(fraction, start, end);
-                int newMid = (int) evaluator.evaluate(fraction, mid, start);
-                int newEnd = (int) evaluator.evaluate(fraction, end, mid);
-                int[] newArray = {newStrat, newMid, newEnd};
-                gradient.setColors(newArray);
-            }
+        animator.addUpdateListener(valueAnimator -> {
+            float fraction = valueAnimator.getAnimatedFraction();
+            int newStrat = (int) evaluator.evaluate(fraction, start, end);
+            int newMid = (int) evaluator.evaluate(fraction, mid, start);
+            int newEnd = (int) evaluator.evaluate(fraction, end, mid);
+            int[] newArray = {newStrat, newMid, newEnd};
+            gradient.setColors(newArray);
         });
 
         animator.start();
@@ -590,7 +575,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
         }
     }
     double counter=0;
-    int ref=0;
     ArrayList <Float> al = new ArrayList<>();
 
     @Override
@@ -625,7 +609,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                             String battString = tempgson.toJson(Data);
                             BatteryVoltageData bd = new Gson().fromJson(battString, BatteryVoltageData.class);
                             if(battery_view != null) {
-                                battery_view.setText("Battery: "+bd.Percent+"%");
+                                battery_view.setText(getString(R.string.batter)+bd.Percent+"%");
                             }
                         });
 
@@ -647,9 +631,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                     ILineDataSet zSet = mLineData.getDataSetByIndex(2);
 
                                     if (xSet == null) {
-                                        xSet = createSet("LinAcc x", getResources().getColor(android.R.color.holo_orange_dark));
-                                        ySet = createSet("LinAcc y", getResources().getColor(android.R.color.holo_green_dark));
-                                        zSet = createSet("LinAcc z", getResources().getColor(android.R.color.holo_blue_dark));
+                                        xSet = createSet("LinAcc x", getColor(android.R.color.holo_orange_dark));
+                                        ySet = createSet("LinAcc y", getColor(android.R.color.holo_green_dark));
+                                        zSet = createSet("LinAcc z", getColor(android.R.color.holo_blue_dark));
                                         mLineData.addDataSet(xSet);
                                         mLineData.addDataSet(ySet);
                                         mLineData.addDataSet(zSet);
@@ -666,9 +650,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 //yAxisTextView.setText(String.format(Locale.getDefault(), "y: %.6f", arr.y));
                                 //zAxisTextView.setText(String.format(Locale.getDefault(), "z: %.6f", arr.z));
                                 if(mLineData!=null) {
-                                    mLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, (float) arr.x), 0);
-                                    mLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, (float) arr.y), 1);
-                                    mLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, (float) arr.z), 2);
+                                    mLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100,(float) arr.x), 0);
+                                    mLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, arr.y), 1);
+                                    mLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, arr.z), 2);
                                     mLineData.notifyDataChanged();
                                 }
                                 if (mChart != null){
@@ -722,9 +706,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                     ILineDataSet zSet = gmLineData.getDataSetByIndex(2);
 
                                     if (xSet == null) {
-                                        xSet = createSet("Gyro x", getResources().getColor(android.R.color.holo_orange_dark));
-                                        ySet = createSet("Gyro y", getResources().getColor(android.R.color.holo_green_dark));
-                                        zSet = createSet("Gyro z", getResources().getColor(android.R.color.holo_blue_dark));
+                                        xSet = createSet("Gyro x", getColor(android.R.color.holo_orange_dark));
+                                        ySet = createSet("Gyro y", getColor(android.R.color.holo_green_dark));
+                                        zSet = createSet("Gyro z", getColor(android.R.color.holo_blue_dark));
                                         gmLineData.addDataSet(xSet);
                                         gmLineData.addDataSet(ySet);
                                         gmLineData.addDataSet(zSet);
@@ -734,9 +718,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 //yAxisTextView.setText(String.format(Locale.getDefault(), "y: %.6f", arr.y));
                                 //zAxisTextView.setText(String.format(Locale.getDefault(), "z: %.6f", arr.z));
                                 if(gmLineData!=null) {
-                                    gmLineData.addEntry(new Entry(gyroscopeData.Timestamp / 100, (float) g_arr.x), 0);
-                                    gmLineData.addEntry(new Entry(gyroscopeData.Timestamp / 100, (float) g_arr.y), 1);
-                                    gmLineData.addEntry(new Entry(gyroscopeData.Timestamp / 100, (float) g_arr.z), 2);
+                                    gmLineData.addEntry(new Entry(gyroscopeData.Timestamp / 100,(float) g_arr.x), 0);
+                                    gmLineData.addEntry(new Entry(gyroscopeData.Timestamp / 100, g_arr.y), 1);
+                                    gmLineData.addEntry(new Entry(gyroscopeData.Timestamp / 100, g_arr.z), 2);
                                     gmLineData.notifyDataChanged();
                                 }
                                 if (gmChart != null){
@@ -775,9 +759,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 ILineDataSet zSet = mmLineData.getDataSetByIndex(2);
 
                                 if (xSet == null) {
-                                    xSet = createSet("Magn x", getResources().getColor(android.R.color.holo_orange_dark));
-                                    ySet = createSet("Magn y", getResources().getColor(android.R.color.holo_green_dark));
-                                    zSet = createSet("Magn z", getResources().getColor(android.R.color.holo_blue_dark));
+                                    xSet = createSet("Magn x", getColor(android.R.color.holo_orange_dark));
+                                    ySet = createSet("Magn y", getColor(android.R.color.holo_green_dark));
+                                    zSet = createSet("Magn z", getColor(android.R.color.holo_blue_dark));
                                     mmLineData.addDataSet(xSet);
                                     mmLineData.addDataSet(ySet);
                                     mmLineData.addDataSet(zSet);
@@ -794,9 +778,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                             //yAxisTextView.setText(String.format(Locale.getDefault(), "y: %.6f", arr.y));
                             //zAxisTextView.setText(String.format(Locale.getDefault(), "z: %.6f", arr.z));
                             if(mmLineData!=null) {
-                                mmLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, (float) arr.x), 0);
-                                mmLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, (float) arr.y), 1);
-                                mmLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, (float) arr.z), 2);
+                                mmLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, (float)arr.x), 0);
+                                mmLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, arr.y), 1);
+                                mmLineData.addEntry(new Entry(linearAccelerationData.Timestamp / 100, arr.z), 2);
                                 mmLineData.notifyDataChanged();
                             }
                             if (mmChart != null){
@@ -875,9 +859,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 ILineDataSet zSet = mLineData.getDataSetByIndex(2);
 
                                 if (xSet == null) {
-                                    xSet = createSet("LinAcc x", getResources().getColor(android.R.color.holo_orange_dark));
-                                    ySet = createSet("LinAcc y", getResources().getColor(android.R.color.holo_green_dark));
-                                    zSet = createSet("LinAcc z", getResources().getColor(android.R.color.holo_blue_dark));
+                                    xSet = createSet("LinAcc x", getColor(android.R.color.holo_orange_dark));
+                                    ySet = createSet("LinAcc y", getColor(android.R.color.holo_green_dark));
+                                    zSet = createSet("LinAcc z", getColor(android.R.color.holo_blue_dark));
                                     mLineData.addDataSet(xSet);
                                     mLineData.addDataSet(ySet);
                                     mLineData.addDataSet(zSet);
@@ -899,8 +883,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                             //zAxisTextView.setText(String.format(Locale.getDefault(), "z: %.6f", arr.z));
                             if(mLineData!=null) {
                                 mLineData.addEntry(new Entry(imu6Data.Timestamp / 100, (float) arrA.x), 0);
-                                mLineData.addEntry(new Entry(imu6Data.Timestamp / 100, (float) arrA.y), 1);
-                                mLineData.addEntry(new Entry(imu6Data.Timestamp / 100, (float) arrA.z), 2);
+                                mLineData.addEntry(new Entry(imu6Data.Timestamp / 100, arrA.y), 1);
+                                mLineData.addEntry(new Entry(imu6Data.Timestamp / 100, arrA.z), 2);
                                 mLineData.notifyDataChanged();
                             }
                             if (mChart != null){
@@ -921,9 +905,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 ILineDataSet gzSet = gmLineData.getDataSetByIndex(2);
 
                                 if (gxSet == null) {
-                                    gxSet = createSet("Gyro x", getResources().getColor(android.R.color.holo_orange_dark));
-                                    gySet = createSet("Gyro y", getResources().getColor(android.R.color.holo_green_dark));
-                                    gzSet = createSet("Gyro z", getResources().getColor(android.R.color.holo_blue_dark));
+                                    gxSet = createSet("Gyro x", getColor(android.R.color.holo_orange_dark));
+                                    gySet = createSet("Gyro y", getColor(android.R.color.holo_green_dark));
+                                    gzSet = createSet("Gyro z", getColor(android.R.color.holo_blue_dark));
                                     gmLineData.addDataSet(gxSet);
                                     gmLineData.addDataSet(gySet);
                                     gmLineData.addDataSet(gzSet);
@@ -934,8 +918,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                             //zAxisTextView.setText(String.format(Locale.getDefault(), "z: %.6f", arr.z));
                             if(gmLineData!=null) {
                                 gmLineData.addEntry(new Entry(imu6Data.Timestamp / 100, (float) arrG.x), 0);
-                                gmLineData.addEntry(new Entry(imu6Data.Timestamp / 100, (float) arrG.y), 1);
-                                gmLineData.addEntry(new Entry(imu6Data.Timestamp / 100, (float) arrG.z), 2);
+                                gmLineData.addEntry(new Entry(imu6Data.Timestamp / 100, arrG.y), 1);
+                                gmLineData.addEntry(new Entry(imu6Data.Timestamp / 100, arrG.z), 2);
                                 gmLineData.notifyDataChanged();
                             }
                             if (gmChart != null){
@@ -970,9 +954,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 ILineDataSet zSet = mLineData.getDataSetByIndex(2);
 
                                 if (xSet == null) {
-                                    xSet = createSet("LinAcc x", getResources().getColor(android.R.color.holo_orange_dark));
-                                    ySet = createSet("LinAcc y", getResources().getColor(android.R.color.holo_green_dark));
-                                    zSet = createSet("LinAcc z", getResources().getColor(android.R.color.holo_blue_dark));
+                                    xSet = createSet("LinAcc x", getColor(android.R.color.holo_orange_dark));
+                                    ySet = createSet("LinAcc y", getColor(android.R.color.holo_green_dark));
+                                    zSet = createSet("LinAcc z", getColor(android.R.color.holo_blue_dark));
                                     mLineData.addDataSet(xSet);
                                     mLineData.addDataSet(ySet);
                                     mLineData.addDataSet(zSet);
@@ -995,8 +979,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                             //zAxisTextView.setText(String.format(Locale.getDefault(), "z: %.6f", arr.z));
                             if(mLineData!=null) {
                                 mLineData.addEntry(new Entry(imu6mData.Timestamp / 100, (float) arrA.x), 0);
-                                mLineData.addEntry(new Entry(imu6mData.Timestamp / 100, (float) arrA.y), 1);
-                                mLineData.addEntry(new Entry(imu6mData.Timestamp / 100, (float) arrA.z), 2);
+                                mLineData.addEntry(new Entry(imu6mData.Timestamp / 100, arrA.y), 1);
+                                mLineData.addEntry(new Entry(imu6mData.Timestamp / 100, arrA.z), 2);
                                 mLineData.notifyDataChanged();
                             }
                             if (mChart != null){
@@ -1018,9 +1002,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 ILineDataSet mzSet = mmLineData.getDataSetByIndex(2);
 
                                 if (mxSet == null) {
-                                    mxSet = createSet("Magn x", getResources().getColor(android.R.color.holo_orange_dark));
-                                    mySet = createSet("Magn y", getResources().getColor(android.R.color.holo_green_dark));
-                                    mzSet = createSet("Magn z", getResources().getColor(android.R.color.holo_blue_dark));
+                                    mxSet = createSet("Magn x", getColor(android.R.color.holo_orange_dark));
+                                    mySet = createSet("Magn y", getColor(android.R.color.holo_green_dark));
+                                    mzSet = createSet("Magn z", getColor(android.R.color.holo_blue_dark));
                                     mmLineData.addDataSet(mxSet);
                                     mmLineData.addDataSet(mySet);
                                     mmLineData.addDataSet(mzSet);
@@ -1028,8 +1012,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                             }
                             if(mmLineData!=null) {
                                 mmLineData.addEntry(new Entry(imu6mData.Timestamp / 100, (float) arrM.x), 0);
-                                mmLineData.addEntry(new Entry(imu6mData.Timestamp / 100, (float) arrM.y), 1);
-                                mmLineData.addEntry(new Entry(imu6mData.Timestamp / 100, (float) arrM.z), 2);
+                                mmLineData.addEntry(new Entry(imu6mData.Timestamp / 100, arrM.y), 1);
+                                mmLineData.addEntry(new Entry(imu6mData.Timestamp / 100, arrM.z), 2);
                                 mmLineData.notifyDataChanged();
                             }
                             if (mmChart != null){
@@ -1063,9 +1047,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 ILineDataSet zSet = mLineData.getDataSetByIndex(2);
 
                                 if (xSet == null) {
-                                    xSet = createSet("LinAcc x", getResources().getColor(android.R.color.holo_orange_dark));
-                                    ySet = createSet("LinAcc y", getResources().getColor(android.R.color.holo_green_dark));
-                                    zSet = createSet("LinAcc z", getResources().getColor(android.R.color.holo_blue_dark));
+                                    xSet = createSet("LinAcc x", getColor(android.R.color.holo_orange_dark));
+                                    ySet = createSet("LinAcc y", getColor(android.R.color.holo_green_dark));
+                                    zSet = createSet("LinAcc z", getColor(android.R.color.holo_blue_dark));
                                     mLineData.addDataSet(xSet);
                                     mLineData.addDataSet(ySet);
                                     mLineData.addDataSet(zSet);
@@ -1092,8 +1076,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                             //zAxisTextView.setText(String.format(Locale.getDefault(), "z: %.6f", arr.z));
                             if(mLineData!=null) {
                                 mLineData.addEntry(new Entry(imu9Data.Timestamp / 100, (float) arrA.x), 0);
-                                mLineData.addEntry(new Entry(imu9Data.Timestamp / 100, (float) arrA.y), 1);
-                                mLineData.addEntry(new Entry(imu9Data.Timestamp / 100, (float) arrA.z), 2);
+                                mLineData.addEntry(new Entry(imu9Data.Timestamp / 100, arrA.y), 1);
+                                mLineData.addEntry(new Entry(imu9Data.Timestamp / 100, arrA.z), 2);
                                 mLineData.notifyDataChanged();
                             }
                             if (mChart != null){
@@ -1114,9 +1098,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 ILineDataSet gzSet = gmLineData.getDataSetByIndex(2);
 
                                 if (gxSet == null) {
-                                    gxSet = createSet("Gyro x", getResources().getColor(android.R.color.holo_orange_dark));
-                                    gySet = createSet("Gyro y", getResources().getColor(android.R.color.holo_green_dark));
-                                    gzSet = createSet("Gyro z", getResources().getColor(android.R.color.holo_blue_dark));
+                                    gxSet = createSet("Gyro x", getColor(android.R.color.holo_orange_dark));
+                                    gySet = createSet("Gyro y", getColor(android.R.color.holo_green_dark));
+                                    gzSet = createSet("Gyro z", getColor(android.R.color.holo_blue_dark));
                                     gmLineData.addDataSet(gxSet);
                                     gmLineData.addDataSet(gySet);
                                     gmLineData.addDataSet(gzSet);
@@ -1127,8 +1111,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                             //zAxisTextView.setText(String.format(Locale.getDefault(), "z: %.6f", arr.z));
                             if(gmLineData!=null) {
                                 gmLineData.addEntry(new Entry(imu9Data.Timestamp / 100, (float) arrG.x), 0);
-                                gmLineData.addEntry(new Entry(imu9Data.Timestamp / 100, (float) arrG.y), 1);
-                                gmLineData.addEntry(new Entry(imu9Data.Timestamp / 100, (float) arrG.z), 2);
+                                gmLineData.addEntry(new Entry(imu9Data.Timestamp / 100, arrG.y), 1);
+                                gmLineData.addEntry(new Entry(imu9Data.Timestamp / 100, arrG.z), 2);
                                 gmLineData.notifyDataChanged();
                             }
                             if (gmChart != null){
@@ -1150,9 +1134,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 ILineDataSet mzSet = mmLineData.getDataSetByIndex(2);
 
                                 if (mxSet == null) {
-                                    mxSet = createSet("Magn x", getResources().getColor(android.R.color.holo_orange_dark));
-                                    mySet = createSet("Magn y", getResources().getColor(android.R.color.holo_green_dark));
-                                    mzSet = createSet("Magn z", getResources().getColor(android.R.color.holo_blue_dark));
+                                    mxSet = createSet("Magn x", getColor(android.R.color.holo_orange_dark));
+                                    mySet = createSet("Magn y", getColor(android.R.color.holo_green_dark));
+                                    mzSet = createSet("Magn z", getColor(android.R.color.holo_blue_dark));
                                     mmLineData.addDataSet(mxSet);
                                     mmLineData.addDataSet(mySet);
                                     mmLineData.addDataSet(mzSet);
@@ -1160,8 +1144,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                             }
                             if(mmLineData!=null) {
                                 mmLineData.addEntry(new Entry(imu9Data.Timestamp / 100, (float) arrM.x), 0);
-                                mmLineData.addEntry(new Entry(imu9Data.Timestamp / 100, (float) arrM.y), 1);
-                                mmLineData.addEntry(new Entry(imu9Data.Timestamp / 100, (float) arrM.z), 2);
+                                mmLineData.addEntry(new Entry(imu9Data.Timestamp / 100, arrM.y), 1);
+                                mmLineData.addEntry(new Entry(imu9Data.Timestamp / 100, arrM.z), 2);
                                 mmLineData.notifyDataChanged();
                             }
                             if (mmChart != null){
@@ -1327,67 +1311,5 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
         //Program(intervalMS,writekey,object,note);
         Program(intervalMS,writekey,object);
     }
-
-/*
-    //LiveData Fragment
-    @Override
-    public void setAccLine(LineData ln, LineChart lc) {
-        this.mLineData=ln;
-        this.mChart=lc;
-    }
-
-    @Override
-    public void setLinearAccData(TextView x,TextView y, TextView z) {
-        this.xAxisTextView=x;
-        this.yAxisTextView=y;
-        this.zAxisTextView=z;
-
-    }
-
-    @Override
-    public void setHeartData(TextView hrate,TextView interval) {
-        this.Heart_rateView=hrate;
-        this.Heart_rIntervalView=interval;
-    }
-
-    @Override
-    public void setmagneto(TextView textView) {
-        this.magnetoTextview=textView;
-    }
-
-    @Override
-    public void setTemperature(TextView textView) {
-        this.TemperatureTextView=textView;
-    }
-
-    @Override
-    public void onStopPressedInLiveData() {
-        movesenseHelper.UnsubscribeAll();
-        mSeriesECG.resetData(new DataPoint[0]);
-
-        CreateLoadingDialog(getString(R.string.loading_title),getString(R.string.unsubscribe_message));
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        measurementHelper.Stop();
-                        progressDialog.dismiss();
-                        setFragment(para,Page.parameter);
-                    }
-                });
-            }
-        },5000);
-
-    }
-
-    @Override
-    public LineGraphSeries<DataPoint> ECGPoints(LineGraphSeries<DataPoint> points) {
-        this.mSeriesECG=points;
-        return points;
-    }
-
- */
 
 }

@@ -41,20 +41,21 @@
     <string name="notification_location_is_required">Location permission is required to scan bluetooth devices</string>
     <string name="notification_movesense_disconnect">Disconnected from the device!</string>
     <string name="notification_movesense_error">Error occurred with the movesense device</string>
-    <string name="bluetooth_error_0">Scan did not start correctly because of unspecified error.</string>
-    <string name="bluetooth_error_1">Scan did not start correctly because the Bluetooth adapter was disabled.</string>
-    <string name="bluetooth_error_2">Scan did not start correctly because the device does not support it.</string>
-    <string name="bluetooth_error_3">Scan did not start correctly because the user did not accept access to location services.</string>
-    <string name="bluetooth_error_4">Scan did not start because location services are disabled on the device.</string>
-    <string name="bluetooth_error_5">Fails to start scan as BLE scan with the same settings is already started by the app.</string>
-    <string name="bluetooth_error_6">Fails to start scan as app cannot be registered.</string>
-    <string name="bluetooth_error_7">Fails to start scan due an internal error.</string>
-    <string name="bluetooth_error_8">Fails to start power optimized scan as this feature is not supported.</string>
-    <string name="bluetooth_error_9">Fails to start scan as it is out of hardware resources.</string>
-    <string name="bluetooth_error_undocumented_scan_throttle">Scan throttle : 5 scans were started by the app during a 30 second window</string>
+    <string name="bluetooth_error_0" translatable="false">Scan did not start correctly because of unspecified error.</string>
+    <string name="bluetooth_error_1" translatable="false">Scan did not start correctly because the Bluetooth adapter was disabled.</string>
+    <string name="bluetooth_error_2" translatable="false">Scan did not start correctly because the device does not support it.</string>
+    <string name="bluetooth_error_3" translatable="false">Scan did not start correctly because the user did not accept access to location services.</string>
+    <string name="bluetooth_error_4" translatable="false">Scan did not start because location services are disabled on the device.</string>
+    <string name="bluetooth_error_5" translatable="false">Fails to start scan as BLE scan with the same settings is already started by the app.</string>
+    <string name="bluetooth_error_6" translatable="false">Fails to start scan as app cannot be registered.</string>
+    <string name="bluetooth_error_7" translatable="false">Fails to start scan due an internal error.</string>
+    <string name="bluetooth_error_8" translatable="false">Fails to start power optimized scan as this feature is not supported.</string>
+    <string name="bluetooth_error_9" translatable="false">Fails to start scan as it is out of hardware resources.</string>
+    <string name="bluetooth_error_undocumented_scan_throttle" translatable="false">Scan throttle : 5 scans were started by the app during a 30 second window</string>
     <string name="hrate">HeartRate[ms]: </string>
     <string name="bpm">BPM:</string>
     <string name="end_measurements">End Measurements</string>
     <string name="getting_started">Getting Started</string>
     <string name="gymsense">GymSense</string>
+    <string name="batter">Battery:</string>
 </resources>

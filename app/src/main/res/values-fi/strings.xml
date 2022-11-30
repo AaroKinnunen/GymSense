@@ -38,6 +38,12 @@
     <string name="notification_movesense_error">Virhe yhteydessä movesense laitteeseen</string>
     <string name="getting_startedbtn">Aloita</string>
     <string name="end_measurements">Lopeta mittaus</string>
-    <string name="getting_started">Getting Started</string>
+    <string name="getting_started">Aloitus ohjeet</string>
     <string name="gymsense">GymSense</string>
+    <string name="batter">Paristo:</string>
+    <string name="end_workout">Lopeta</string>
+    <string name="kelvin">kelvin:</string>
+    <string name="celsius">celcius:</string>
+    <string name="hrate">Syke(ms)</string>
+    <string name="bpm">Syke:</string>
 </resources>
