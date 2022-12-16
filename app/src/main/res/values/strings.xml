@@ -30,7 +30,7 @@
     <string name="end_workout">End Workout</string>
     <string name="kelvin">kelvin:</string>
     <string name="celsius">celsius:</string>
-    <string name="getting_startedbtn">Begin</string>
+    <string name="getting_startedbtn">Start</string>
     <string name="connecting_message">Connecting to the device</string>
     <string name="scan_help">Press and hold to select device</string>
     <string name="unsubscribe_message">Stopping measurement</string>

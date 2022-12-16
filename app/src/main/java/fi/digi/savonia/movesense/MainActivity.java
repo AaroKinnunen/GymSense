@@ -541,6 +541,17 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
         });
 
     }
+    private static final double GRAVITY = 9.91;
+    public static double[] CompensateGravity(float acc[], float q[])
+    {
+        double g[] = new double[3];
+
+        g[0] = 2 * (q[1] * q[3] - q[0] * q[2]) * GRAVITY;
+        g[1] = 2 * (q[0] * q[1] + q[2] * q[3]) * GRAVITY;
+        g[2] = (q[0] * q[0] - q[1] * q[1] - q[2] * q[2] + q[3] * q[3]) * GRAVITY;
+
+        return new double[]{acc[0] - g[0], acc[1] - g[1], acc[2] - g[2]};
+    }
 
     @Override
     public void OnDisconnect(String reason) {
@@ -646,6 +657,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                 for (int i = 0; i < linearAccelerationData.ArrayAcc.length; i++) {
                                     arr = linearAccelerationData.ArrayAcc[i];
                                 }
+                                //float arracc [] = new float[3];
+                                //CompensateGravity(arracc,)
                                 //xAxisTextView.setText(String.format(Locale.getDefault(),"x: %.6f", arr.x));
                                 //yAxisTextView.setText(String.format(Locale.getDefault(), "y: %.6f", arr.y));
                                 //zAxisTextView.setText(String.format(Locale.getDefault(), "z: %.6f", arr.z));
@@ -827,7 +840,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothActionLi
                                         mSeriesECG.resetData(new DataPoint[0]);
                                     }
                                     assert mSeriesECG != null;
-                                    if (mSeriesECG.getHighestValueY() > 2400) {
+                                    if (mSeriesECG.getHighestValueY() > 2900) {
                                         mSeriesECG.setColor(Color.RED);
                                     } else {
                                         mSeriesECG.setColor(Color.GREEN);

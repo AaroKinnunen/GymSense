@@ -89,8 +89,8 @@ public class ECG_Fragment extends Fragment {
         ecg_GraphView.getViewport().setMaxX(500);
 
         graphView.getViewport().setYAxisBoundsManual(true);
-        graphView.getViewport().setMinY(-3000);
-        graphView.getViewport().setMaxY(3000);
+        graphView.getViewport().setMinY(-3400);
+        graphView.getViewport().setMaxY(3400);
 
         graphView.getViewport().setScrollable(false);
         graphView.getViewport().setScrollableY(false);

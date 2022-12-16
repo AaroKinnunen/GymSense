@@ -50,7 +50,7 @@ public class SamiMeasurementHelper implements HttpActionListener{
  */
     public void SendThings(ThinsboardPackage thinsboardPackage){
         String data =gson.toJson(thinsboardPackage);
-        //httpHelper.EnqueuePostRequest(URL_thing, RequestBody.create(data,mediaType),requestIDTh);
+        httpHelper.EnqueuePostRequest(URL_thing, RequestBody.create(data,mediaType),requestIDTh);
     }
 /*
     public void sendLogin(LoginPack loginPack){
